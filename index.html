@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>China Tour Guiding — Competition Trainer</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9C2B2E">
+<meta name="background-color" content="#F4EEDF">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="China Tour Guiding">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{
+  --red: #9C2B2E;
+  --red-deep: #6E1D20;
+  --gold: #C9A24B;
+  --gold-soft: #E4CD8C;
+  --ivory: #F4EEDF;
+  --ivory-2: #EAE1C9;
+  --charcoal: #221E1A;
+  --charcoal-2: #35302A;
+  --ink: #2A2420;
+  --green-ok: #4C7A5E;
+  --amber-warn: #C98A2E;
+  --red-danger: #B23A3A;
+  --shadow: 0 14px 34px rgba(34,30,26,.22);
+  --radius: 14px;
+  --serif: Georgia, 'Times New Roman', 'Songti SC', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:
+    radial-gradient(1200px 700px at 85% -10%, rgba(201,162,75,.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(156,43,46,.10), transparent 55%),
+    var(--ivory);
+  color:var(--ink);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--gold-soft);}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{font-family:var(--serif); margin:0; color:var(--charcoal);}
+.hidden{display:none !important;}
+.app-shell{max-width:1180px;margin:0 auto;padding:28px 22px 60px;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 2px 22px;border-bottom:1px solid rgba(34,30,26,.1);margin-bottom:26px;
+}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand-mark{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(155deg,var(--red),var(--red-deep));
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold-soft);font-family:var(--serif);font-size:19px;font-weight:700;
+  box-shadow:inset 0 0 0 2px rgba(228,205,140,.35);
+}
+.brand-text .t1{font-family:var(--serif);font-size:15px;letter-spacing:.04em;color:var(--charcoal);line-height:1.15;}
+.brand-text .t2{font-size:11px;color:var(--charcoal-2);opacity:.65;}
+.top-actions{display:flex;gap:10px;}
+.icon-btn{
+  background:transparent;border:1px solid rgba(34,30,26,.18);border-radius:10px;
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--charcoal-2);transition:.15s;
+}
+.icon-btn:hover{border-color:var(--gold);color:var(--red);}
+
+/* ---------- Home ---------- */
+.hero{text-align:center;padding:18px 10px 40px;}
+.hero .eyebrow{font-size:13px;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:10px;}
+.hero h1{font-size:44px;line-height:1.08;}
+.hero p.tag{font-family:var(--serif);font-style:italic;color:var(--charcoal-2);font-size:17px;margin-top:12px;}
+
+.menu-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px;
+}
+@media(max-width:920px){.menu-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.menu-grid{grid-template-columns:1fr;}}
+.menu-card{
+  background:linear-gradient(180deg,#fff, #fdfbf5);
+  border:1px solid rgba(34,30,26,.10);
+  border-radius:var(--radius);
+  padding:20px 18px;text-align:left;
+  transition:transform .15s, box-shadow .15s, border-color .15s;
+  display:flex;flex-direction:column;gap:8px;min-height:118px;
+}
+.menu-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--gold);}
+.menu-card .mc-icon{font-size:22px;}
+.menu-card .mc-title{font-family:var(--serif);font-size:17px;color:var(--charcoal);}
+.menu-card .mc-sub{font-size:12.5px;color:var(--charcoal-2);opacity:.75;line-height:1.4;}
+.menu-card.primary{background:linear-gradient(150deg,var(--red),var(--red-deep));color:#fff;border:none;}
+.menu-card.primary .mc-title,.menu-card.primary .mc-sub{color:#fff;}
+.menu-card.primary .mc-sub{opacity:.85;}
+
+.stat-strip{
+  margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+}
+.stat-pill{
+  background:#fff;border:1px solid rgba(34,30,26,.1);border-radius:999px;
+  padding:8px 18px;font-size:12.5px;color:var(--charcoal-2);display:flex;gap:8px;align-items:center;
+}
+.stat-pill b{color:var(--red);font-family:var(--serif);font-size:14px;}
+
+/* ---------- Generic screen ---------- */
+.screen{animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.screen-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+.back-btn{
+  background:#fff;border:1px solid rgba(34,30,26,.18);border-radius:10px;
+  padding:8px 14px;font-size:13px;color:var(--charcoal-2);
+}
+.back-btn:hover{border-color:var(--red);color:var(--red);}
+.screen-header h2{font-size:26px;}
+.card{
+  background:#fff;border:1px solid rgba(34,30,26,.10);border-radius:var(--radius);
+  padding:22px;box-shadow:0 4px 16px rgba(34,30,26,.05);
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  border-radius:10px;padding:12px 20px;font-size:14.5px;font-weight:600;border:none;
+  transition:.15s; letter-spacing:.01em;
+}
+.btn-primary{background:linear-gradient(150deg,var(--red),var(--red-deep));color:#fff;box-shadow:0 6px 16px rgba(156,43,46,.30);}
+.btn-primary:hover{filter:brightness(1.06);}
+.btn-gold{background:linear-gradient(150deg,var(--gold),#B8903D);color:#2A2115;box-shadow:0 6px 16px rgba(201,162,75,.30);}
+.btn-ghost{background:transparent;border:1px solid rgba(34,30,26,.2);color:var(--charcoal-2);}
+.btn-ghost:hover{border-color:var(--red);color:var(--red);}
+.btn-danger{background:#fff;border:1px solid var(--red-danger);color:var(--red-danger);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+/* ---------- Mode select sub-menu ---------- */
+.chip-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px;}
+.chip{
+  padding:8px 16px;border-radius:999px;border:1px solid rgba(34,30,26,.2);background:#fff;
+  font-size:13px;color:var(--charcoal-2);
+}
+.chip.active{background:var(--charcoal);color:var(--gold-soft);border-color:var(--charcoal);}
+
+/* ---------- Attraction Card ---------- */
+.attraction-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;}
+@media(max-width:820px){.attraction-grid{grid-template-columns:1fr;}}
+.attr-card{
+  background:linear-gradient(165deg,#fff,#FBF7EC);
+  border:1px solid rgba(34,30,26,.12);border-radius:var(--radius);
+  padding:18px;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 6px 18px rgba(34,30,26,.06);
+}
+.attr-card .idx{
+  position:absolute;top:12px;left:12px;font-family:var(--serif);font-size:12px;color:var(--gold);
+  border:1px solid var(--gold-soft);border-radius:50%;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+}
+.attr-card .icon-wrap{
+  width:82px;height:82px;margin:14px auto 10px;border-radius:50%;
+  background:linear-gradient(155deg,var(--red),var(--red-deep));
+  display:flex;align-items:center;justify-content:center;color:var(--gold-soft);
+  box-shadow:inset 0 0 0 3px rgba(228,205,140,.3);
+}
+.attr-card .icon-wrap svg{width:44px;height:44px;}
+.attr-card .name{font-family:var(--serif);font-size:16.5px;color:var(--charcoal);margin-top:2px;line-height:1.25;}
+.attr-card .loc{font-size:11.5px;color:var(--charcoal-2);opacity:.7;margin-top:4px;}
+.attr-card.hidden-name .name, .attr-card.hidden-name .loc{filter:blur(7px); user-select:none;}
+.attr-card.dim{opacity:.35;filter:grayscale(.4);}
+.attr-card.current{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.25), 0 8px 22px rgba(34,30,26,.12);}
+
+/* ---------- Timers ---------- */
+.timer-zone{text-align:center;padding:10px 0 6px;}
+.timer-label{font-size:12.5px;letter-spacing:.08em;color:var(--charcoal-2);text-transform:uppercase;margin-bottom:6px;}
+.timer-display{
+  font-family:var(--mono);font-size:76px;font-weight:700;color:var(--charcoal);
+  letter-spacing:2px;line-height:1;font-variant-numeric:tabular-nums;
+}
+.timer-display.warn{color:var(--amber-warn);}
+.timer-display.danger{color:var(--red-danger); animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+.timer-bar-track{height:8px;border-radius:999px;background:rgba(34,30,26,.08);margin:16px auto 0;max-width:520px;overflow:hidden;}
+.timer-bar-fill{height:100%;background:linear-gradient(90deg,var(--green-ok),var(--gold));transition:width .3s linear;}
+.timer-bar-fill.warn{background:linear-gradient(90deg,var(--amber-warn),var(--red-danger));}
+.timer-note{margin-top:10px;font-size:13px;color:var(--charcoal-2);min-height:18px;}
+.phase-banner{
+  display:inline-block;padding:6px 16px;border-radius:999px;font-size:12.5px;letter-spacing:.05em;
+  background:var(--charcoal);color:var(--gold-soft);margin-bottom:14px;
+}
+.phase-banner.presenting{background:var(--red);color:#fff;}
+.phase-banner.prep{background:var(--gold);color:#2A2115;}
+
+/* ---------- Rotation strip ---------- */
+.rotation-strip{display:flex;gap:10px;justify-content:center;margin:22px 0 4px;flex-wrap:wrap;}
+.rot-chip{
+  padding:8px 14px;border-radius:10px;background:#fff;border:1px solid rgba(34,30,26,.14);
+  font-size:12.5px;color:var(--charcoal-2);display:flex;gap:8px;align-items:center;
+}
+.rot-chip.active{border-color:var(--red);background:linear-gradient(150deg,#fff,#FBEAEA);color:var(--red);font-weight:600;}
+
+/* ---------- Prompts (impromptu) ---------- */
+.prompt-box{
+  background:#FBF7EC;border:1px dashed var(--gold);border-radius:12px;padding:16px 18px;margin-top:18px;
+  font-size:13.5px;color:var(--charcoal-2);text-align:left;max-width:640px;margin-left:auto;margin-right:auto;
+}
+.prompt-box b{color:var(--charcoal);}
+.prompt-box ul{margin:8px 0 0;padding-left:18px;}
+.prompt-box li{margin-bottom:3px;}
+
+/* ---------- Progress dashboard ---------- */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+@media(max-width:820px){.dash-grid{grid-template-columns:repeat(2,1fr);}}
+.dash-tile{background:#fff;border:1px solid rgba(34,30,26,.1);border-radius:12px;padding:16px;text-align:center;}
+.dash-tile .num{font-family:var(--serif);font-size:30px;color:var(--red);}
+.dash-tile .lbl{font-size:11.5px;color:var(--charcoal-2);letter-spacing:.04em;text-transform:uppercase;margin-top:4px;}
+.progress-track{height:22px;border-radius:999px;background:rgba(34,30,26,.08);overflow:hidden;margin:6px 0 2px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-size:11px;font-weight:700;transition:width .5s ease;}
+.combo-mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20px,1fr));gap:4px;margin-top:14px;}
+.combo-dot{width:100%;aspect-ratio:1;border-radius:4px;background:rgba(34,30,26,.1);}
+.combo-dot.done{background:linear-gradient(150deg,var(--red),var(--gold));}
+
+/* ---------- History ---------- */
+.history-item{
+  border:1px solid rgba(34,30,26,.1);border-radius:10px;padding:14px 16px;margin-bottom:10px;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.history-item .h-left b{font-family:var(--serif);color:var(--charcoal);font-size:14.5px;}
+.history-item .h-left .h-combo{font-size:12.5px;color:var(--charcoal-2);margin-top:4px;}
+.history-item .h-right{text-align:right;font-size:11.5px;color:var(--charcoal-2);}
+.tag-mode{display:inline-block;background:var(--ivory-2);color:var(--charcoal-2);border-radius:999px;padding:3px 10px;font-size:11px;margin-top:4px;}
+.empty-note{text-align:center;color:var(--charcoal-2);opacity:.6;padding:40px 10px;font-family:var(--serif);font-style:italic;}
+
+/* ---------- Settings ---------- */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:820px){.settings-grid{grid-template-columns:1fr;}}
+.setting-block{border:1px solid rgba(34,30,26,.1);border-radius:12px;padding:16px 18px;}
+.setting-block h4{font-size:14px;margin-bottom:10px;color:var(--red);}
+.setting-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13.5px;}
+.setting-row input[type=number]{width:64px;padding:6px 8px;border-radius:8px;border:1px solid rgba(34,30,26,.2);font-family:var(--mono);}
+.toggle{position:relative;width:42px;height:24px;background:rgba(34,30,26,.2);border-radius:999px;cursor:pointer;transition:.15s;flex-shrink:0;}
+.toggle.on{background:var(--red);}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.15s;}
+.toggle.on::after{left:21px;}
+.kbd-list{font-size:12.5px;color:var(--charcoal-2);line-height:2;}
+.kbd-list kbd{background:var(--ivory-2);border-radius:4px;padding:2px 7px;font-family:var(--mono);margin-right:6px;}
+
+/* ---------- Self eval / reflection ---------- */
+.rate-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.rate-row .r-label{font-size:13.5px;color:var(--charcoal);}
+.stars{display:flex;gap:4px;}
+.star{width:26px;height:26px;border-radius:50%;border:1px solid rgba(34,30,26,.2);background:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--charcoal-2);}
+.star.on{background:var(--gold);border-color:var(--gold);color:#2A2115;}
+textarea,select{
+  width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(34,30,26,.2);font-family:inherit;font-size:13.5px;resize:vertical;
+}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12.5px;color:var(--charcoal-2);margin-bottom:6px;letter-spacing:.02em;}
+.yn-row{display:flex;gap:10px;}
+.yn-btn{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(34,30,26,.2);background:#fff;font-size:13.5px;color:var(--charcoal-2);}
+.yn-btn.sel-yes.active{background:var(--green-ok);border-color:var(--green-ok);color:#fff;}
+.yn-btn.sel-no.active{background:var(--red-danger);border-color:var(--red-danger);color:#fff;}
+
+/* ---------- Fullscreen presentation ---------- */
+#fs-overlay{
+  position:fixed;inset:0;background:var(--charcoal);z-index:999;display:none;
+  flex-direction:column;align-items:center;justify-content:center;color:var(--ivory);
+}
+#fs-overlay.show{display:flex;}
+#fs-overlay .fs-exit{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:var(--ivory);border-radius:10px;padding:8px 14px;font-size:13px;}
+#fs-overlay .fs-timer{font-family:var(--mono);font-size:min(20vw,180px);font-variant-numeric:tabular-nums;line-height:1;}
+#fs-overlay .fs-phase{font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:10px;}
+#fs-overlay .fs-attractions{display:flex;gap:34px;margin-top:26px;flex-wrap:wrap;justify-content:center;}
+#fs-overlay .fs-attr{text-align:center;opacity:.5;transition:.2s;}
+#fs-overlay .fs-attr.active{opacity:1;transform:scale(1.08);}
+#fs-overlay .fs-attr .fs-name{font-family:var(--serif);font-size:19px;margin-top:8px;}
+
+/* ---------- Toast ---------- */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--charcoal);color:var(--gold-soft);padding:12px 22px;border-radius:10px;font-size:13.5px;
+  opacity:0;pointer-events:none;transition:.25s;z-index:1200;box-shadow:var(--shadow);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- Reveal animation ---------- */
+.reveal-countdown{font-family:var(--serif);font-size:120px;color:var(--red);text-align:center;padding:60px 0;}
+.reveal-attr-in{animation:revealIn .5s ease both;}
+@keyframes revealIn{from{opacity:0;transform:translateY(14px) scale(.94);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+footer.app-footer{text-align:center;font-size:11.5px;color:var(--charcoal-2);opacity:.5;margin-top:50px;}
+
+/* =========================================================
+   MOBILE / ANDROID / PWA ADDITIONS
+   ========================================================= */
+:root{ box-sizing:border-box; }
+html{ overflow-x:hidden; scroll-padding-top:env(safe-area-inset-top,0px); }
+body{
+  overflow-x:hidden;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-left:env(safe-area-inset-left,0px);
+  padding-right:env(safe-area-inset-right,0px);
+}
+.app-shell{ padding-bottom:calc(84px + env(safe-area-inset-bottom,0px)); } /* clears bottom nav */
+
+/* Bottom mobile navigation — hidden on wide screens */
+.bottom-nav{
+  display:none;
+  position:fixed; left:0; right:0; bottom:0; z-index:400;
+  background:rgba(244,238,223,.96); backdrop-filter:blur(6px);
+  border-top:1px solid rgba(34,30,26,.12);
+  padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));
+  justify-content:space-around; align-items:stretch;
+}
+.bottom-nav button{
+  background:transparent;border:none;flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:6px 2px; min-height:52px; color:var(--charcoal-2); font-size:10.5px; border-radius:10px;
+}
+.bottom-nav button .bn-icon{font-size:19px;}
+.bottom-nav button.active{color:var(--red); background:rgba(156,43,46,.08);}
+@media (max-width:760px){
+  .bottom-nav{ display:flex; }
+  .topbar .top-actions{ display:none; } /* avoid duplicate nav; bottom nav covers it on mobile */
+  .app-shell{ padding-left:14px; padding-right:14px; padding-top:16px; }
+  .hero h1{ font-size:30px; }
+  .hero p.tag{ font-size:14.5px; }
+  .timer-display{ font-size:56px; }
+  .menu-grid{ gap:12px; }
+  .menu-card{ min-height:96px; padding:16px 14px; }
+  .attraction-grid{ gap:12px; }
+  .dash-grid{ grid-template-columns:repeat(2,1fr); }
+}
+/* Bottom nav must never cover the active simulation's action buttons */
+body.simulating .bottom-nav{ display:none; }
+@media (max-width:760px){ body.simulating .app-shell{ padding-bottom:24px; } }
+
+/* Touch targets: keep every actionable control comfortably tappable */
+@media (max-width:760px){
+  .btn, .chip, .icon-btn, .back-btn, .yn-btn, .star{ min-height:44px; }
+  .star{ min-height:34px; width:34px; }
+  .btn{ padding:13px 18px; font-size:15px; }
+  .btn-row{ gap:10px; }
+  .btn-row .btn{ flex:1 1 auto; }
+}
+/* remove hover-only affordances on touch devices */
+@media (hover:none){
+  .menu-card:hover, .icon-btn:hover, .back-btn:hover, .btn-ghost:hover{ transform:none; box-shadow:none; }
+}
+
+/* Landscape phones: keep timer and controls reachable without breaking layout */
+@media (max-height:480px) and (orientation:landscape){
+  .timer-display{ font-size:44px; }
+  .hero{ padding:8px 10px 18px; }
+  .attraction-grid{ grid-template-columns:repeat(3,1fr); }
+  .app-shell{ padding-bottom:20px; }
+  .bottom-nav{ display:none; }
+}
+
+/* Install banner + update banner */
+.sys-banner{
+  position:fixed; left:14px; right:14px; z-index:900;
+  background:var(--charcoal); color:var(--ivory); border-radius:12px;
+  padding:14px 16px; box-shadow:var(--shadow); display:none; gap:10px; align-items:center; justify-content:space-between;
+}
+.sys-banner.show{ display:flex; }
+#install-banner{ bottom:calc(94px + env(safe-area-inset-bottom,0px)); }
+#update-banner{ top:calc(14px + env(safe-area-inset-top,0px)); }
+.sys-banner .sb-text{ font-size:12.5px; line-height:1.4; }
+.sys-banner .sb-text b{ color:var(--gold-soft); font-family:var(--serif); font-size:13.5px; }
+.sys-banner .sb-actions{ display:flex; gap:8px; flex-shrink:0; }
+.sys-banner button.sb-btn{ background:var(--gold); color:#2A2115; border:none; border-radius:8px; padding:8px 12px; font-size:12.5px; font-weight:600; }
+.sys-banner button.sb-dismiss{ background:transparent; color:var(--ivory); opacity:.6; border:none; font-size:16px; padding:4px 6px; }
+
+/* Fullscreen exit button — larger tap target on mobile */
+@media (max-width:760px){
+  #fs-overlay .fs-exit{ padding:10px 16px; font-size:14px; top:calc(14px + env(safe-area-inset-top,0px)); }
+  #fs-overlay .fs-timer{ font-size:min(26vw,140px); }
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="topbar">
+    <div class="brand" onclick="Router.go('home')">
+      <div class="brand-mark">中</div>
+      <div class="brand-text">
+        <div class="t1">China Tour Guiding</div>
+        <div class="t2">Competition Training Simulator</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" title="Progress" onclick="Router.go('progress')">📊</button>
+      <button class="icon-btn" title="History" onclick="Router.go('history')">📚</button>
+      <button class="icon-btn" title="Settings" onclick="Router.go('settings')">⚙️</button>
+    </div>
+  </div>
+
+  <div id="app-root"></div>
+
+  <footer class="app-footer">Offline training tool · progress saved on this device only · not an official scoring system</footer>
+</div>
+
+<nav class="bottom-nav" id="bottom-nav">
+  <button data-screen="home" onclick="Router.go('home')"><span class="bn-icon">🏠</span>Home</button>
+  <button data-screen="progress" onclick="Router.go('progress')"><span class="bn-icon">📊</span>Progress</button>
+  <button data-screen="history" onclick="Router.go('history')"><span class="bn-icon">📚</span>History</button>
+  <button data-screen="settings" onclick="Router.go('settings')"><span class="bn-icon">⚙️</span>Settings</button>
+  <button data-screen="install" onclick="Router.go('install')"><span class="bn-icon">📲</span>Install</button>
+</nav>
+
+<div class="sys-banner" id="install-banner">
+  <div class="sb-text"><b>Install this app</b><br>Add it to your home screen for one-tap offline access.</div>
+  <div class="sb-actions">
+    <button class="sb-btn" onclick="PWAInstall.promptInstall()">Install</button>
+    <button class="sb-dismiss" onclick="PWAInstall.dismissBanner()">✕</button>
+  </div>
+</div>
+
+<div class="sys-banner" id="update-banner">
+  <div class="sb-text"><b>🔄 Update available</b><br>A new version is ready. Your progress is kept.</div>
+  <div class="sb-actions">
+    <button class="sb-btn" onclick="PWAUpdate.applyUpdate()">Update Now</button>
+    <button class="sb-dismiss" onclick="PWAUpdate.dismissBanner()">✕</button>
+  </div>
+</div>
+
+<div id="fs-overlay">
+  <button class="fs-exit" onclick="FullscreenMode.exit()">Exit Full Screen ✕</button>
+  <div id="fs-content"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   DATA — the official 10 China attractions (source of truth)
+   ========================================================= */
+const ATTRACTIONS = [
+  { id:0, name:"Great Wall of China", loc:"Northern China", icon:"wall" },
+  { id:1, name:"Forbidden City", loc:"Beijing", icon:"gate" },
+  { id:2, name:"Terracotta Army", loc:"Xi'an, Shaanxi", icon:"army" },
+  { id:3, name:"Tianmen Mountain Zhangjiajie", loc:"Zhangjiajie, Hunan", icon:"cave" },
+  { id:4, name:"The Bund", loc:"Shanghai", icon:"skyline" },
+  { id:5, name:"Marble Boat", loc:"Summer Palace, Beijing", icon:"boat" },
+  { id:6, name:"Potala Palace", loc:"Lhasa, Tibet", icon:"palace" },
+  { id:7, name:"Li River", loc:"Guilin, Guangxi", icon:"river" },
+  { id:8, name:"Yellow Mountain (Huangshan)", loc:"Anhui", icon:"peak" },
+  { id:9, name:"Temple of Heaven", loc:"Beijing", icon:"temple" },
+];
+
+const ICONS = {
+  wall: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 34h6v-6h6v6h6v-6h6v6h6v-6h6v14H4z"/><path d="M8 28v-6M20 28v-6M32 28v-6M40 28v-6"/><path d="M4 44h40"/></svg>`,
+  gate: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44V20l18-10 18 10v24"/><path d="M6 44h36"/><path d="M18 44V26h12v18"/><path d="M6 20h36"/></svg>`,
+  army: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3.4"/><circle cx="24" cy="10" r="3.4"/><circle cx="36" cy="10" r="3.4"/><path d="M12 15v18M24 15v18M36 15v18M8 40h8M20 40h8M32 40h8"/></svg>`,
+  cave: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 42 16 8h4l6 16 6-16h4l12 34"/><path d="M20 28a4 6 0 0 0 8 0"/></svg>`,
+  skyline: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 44V22h6v22M14 44V14h7v30M25 44V26h6v18M35 44V10h4v34M43 44V18h1v26"/><path d="M4 44h40"/></svg>`,
+  boat: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 30h40l-6 12H10z"/><path d="M12 30V14h24v16"/><path d="M18 14V8M30 14V8M24 8V4"/></svg>`,
+  palace: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 44 14 20h20l8 24"/><path d="M14 20 20 6h8l6 14"/><path d="M6 44h36M10 36h28M13 28h22"/></svg>`,
+  river: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 10 6h4l6 14 6-14h4l6 14"/><path d="M32 20 38 6h4l4 14"/><path d="M2 34c6-4 10 4 16 0s10 4 16 0 8 2 12 0"/></svg>`,
+  peak: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 40 16 14l6 8 4-6 18 24z"/><path d="M18 30l3-3 3 3"/></svg>`,
+  temple: `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="28" r="12"/><path d="M24 4v6M14 20h20M24 16v24"/><path d="M24 44h0"/><ellipse cx="24" cy="40" rx="16" ry="2.4"/></svg>`,
+};
+
+function attrIconSVG(a){ return ICONS[a.icon] || ICONS.temple; }
+
+/* =========================================================
+   COMBINATION ENGINE — all C(10,3) = 120 combos
+   ========================================================= */
+function generateAllCombos(){
+  const combos = [];
+  for(let i=0;i<10;i++)
+    for(let j=i+1;j<10;j++)
+      for(let k=j+1;k<10;k++)
+        combos.push([i,j,k]);
+  return combos; // length 120
+}
+const ALL_COMBOS = generateAllCombos();
+function comboKey(arr){ return [...arr].sort((a,b)=>a-b).join('-'); }
+function shuffleArr(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function randInt(n){ return Math.floor(Math.random()*n); }
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+const STORE_KEY = 'chinaTourTrainer_v1';
+const SCHEMA_VERSION = 1;
+function defaultState(){
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    settings:{
+      prepSeconds:120,
+      presentSeconds:300,
+      rotationMode:'equal', // equal | fast | custom | off
+      customRotation:[100,100,100],
+      randomization:'coverage', // pure | coverage
+      difficulty:'normal', // easy | normal | competition | pressure
+      sound:true,
+      animations:true,
+      haptics:true,
+      wakeLock:true,
+    },
+    coverage:{}, // key -> {count, lastDate}
+    history:[], // {id,date,names[3],order[3],mode,completed,combo}
+    streak:0,
+    totalSimulations:0,
+  };
+}
+let STATE = loadState();
+// Migration hook: bumping SCHEMA_VERSION and adding a case here lets old
+// localStorage data (coverage/history/streak) survive future app updates
+// instead of being wiped. Nothing here ever deletes existing progress.
+function migrateState(parsed){
+  let s = parsed;
+  const fromVersion = s.schemaVersion || 0;
+  if(fromVersion < 1){
+    s.schemaVersion = 1; // no structural change yet — placeholder for future migrations
+  }
+  return s;
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultState();
+    let parsed = JSON.parse(raw);
+    parsed = migrateState(parsed);
+    return Object.assign(defaultState(), parsed, {settings:Object.assign(defaultState().settings, parsed.settings||{})});
+  }catch(e){ return defaultState(); }
+}
+function saveState(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(STATE)); }catch(e){ /* storage unavailable */ }
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._h);
+  toast._h = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+const Router = {
+  current:'home',
+  go(screen, params){
+    this.current = screen;
+    this.params = params||{};
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+};
+
+/* =========================================================
+   SIMULATION ENGINE (shared by all practice modes)
+   ========================================================= */
+const Sim = {
+  mode:null,            // 'official' | 'pressure' | 'impromptu' | 'pure' | 'easy' etc (label)
+  namesHidden:false,    // visual recall behavior
+  rotationEnabled:false,
+  combo:null,           // array of 3 attraction ids in presentation order
+  phase:'idle',         // idle -> reveal -> prep -> present -> complete
+  prepDuration:120,
+  presentDuration:300,
+  prepStart:0,
+  presentStart:0,
+  paused:false,
+  pauseAllowed:true,
+  pausedAccum:0,
+  pauseMoment:0,
+  rotationSegments:[100,100,100],
+  currentRotIndex:0,
+  rafId:null,
+  fullscreen:false,
+  finishedEarly:false,
+
+  start(mode, opts){
+    unlockAudio();
+    opts = opts||{};
+    this.mode = mode;
+    this.namesHidden = !!opts.namesHidden;
+    this.rotationEnabled = !!opts.rotation;
+    this.pauseAllowed = opts.pauseAllowed !== undefined ? opts.pauseAllowed : true;
+    this.prepDuration = STATE.settings.prepSeconds;
+    this.presentDuration = STATE.settings.presentSeconds;
+    this.rotationSegments = getRotationSegments();
+    this.finishedEarly = false;
+
+    // pick combination
+    const order = shuffleArr(pickCombo());
+    this.combo = order;
+
+    this.phase = 'reveal';
+    document.body.classList.add('simulating');
+    Router.go('simulate');
+  },
+
+  beginPrep(){
+    unlockAudio();
+    this.phase = 'prep';
+    this.prepStart = Date.now();
+    this.paused=false; this.pausedAccum=0;
+    document.body.classList.add('simulating');
+    WakeLockMgr.acquire();
+    render();
+    this.tick();
+  },
+
+  beginPresent(){
+    this.phase = 'present';
+    this.presentStart = Date.now();
+    this.currentRotIndex = 0;
+    this.paused=false; this.pausedAccum=0;
+    this._lastPresentSec = null;
+    playChime();
+    hapticPulse(40);
+    render();
+    this.tick();
+  },
+
+  togglePause(){
+    if(!this.pauseAllowed) return;
+    if(this.paused){
+      this.pausedAccum += Date.now()-this.pauseMoment;
+      this.paused=false;
+    } else {
+      this.paused=true;
+      this.pauseMoment = Date.now();
+    }
+    render();
+  },
+
+  elapsedPrep(){
+    if(this.paused) return (this.pauseMoment - this.prepStart - this.pausedAccum)/1000;
+    return (Date.now()-this.prepStart-this.pausedAccum)/1000;
+  },
+  elapsedPresent(){
+    if(this.paused) return (this.pauseMoment - this.presentStart - this.pausedAccum)/1000;
+    return (Date.now()-this.presentStart-this.pausedAccum)/1000;
+  },
+
+  tick(){
+    cancelAnimationFrame(this.rafId);
+    const loop = ()=>{
+      if(Sim.phase==='prep'){
+        const remain = Sim.prepDuration - Sim.elapsedPrep();
+        if(!Sim.paused && remain<=0){
+          Sim.beginPresent();
+          return;
+        }
+        updatePrepUI(Math.max(0,remain));
+      } else if(Sim.phase==='present'){
+        const remain = Sim.presentDuration - Sim.elapsedPresent();
+        if(Sim.rotationEnabled){
+          updateRotationUI(Sim.elapsedPresent());
+        }
+        if(!Sim.paused && remain<=0){
+          Sim.complete();
+          return;
+        }
+        updatePresentUI(Math.max(0,remain));
+      } else {
+        return;
+      }
+      Sim.rafId = requestAnimationFrame(loop);
+    };
+    this.rafId = requestAnimationFrame(loop);
+  },
+
+  finishNow(){
+    if(this.phase==='present'){ this.finishedEarly = true; this.complete(); }
+  },
+
+  complete(){
+    cancelAnimationFrame(this.rafId);
+    this.phase='complete';
+    if(FullscreenMode.active) FullscreenMode.exit();
+    WakeLockMgr.release();
+    document.body.classList.remove('simulating');
+    playChime(true);
+    hapticPulse([60,40,60]);
+    recordSimulation(this.combo, this.mode, true);
+    render();
+  },
+
+  exit(){
+    cancelAnimationFrame(this.rafId);
+    this.phase='idle';
+    if(FullscreenMode.active) FullscreenMode.exit();
+    WakeLockMgr.release();
+    document.body.classList.remove('simulating');
+    Router.go('home');
+  }
+};
+
+function pickCombo(){
+  if(STATE.settings.randomization==='pure'){
+    return [...ALL_COMBOS[randInt(ALL_COMBOS.length)]];
+  }
+  // coverage mode: prioritize unpracticed
+  const unpracticed = ALL_COMBOS.filter(c=>!STATE.coverage[comboKey(c)]);
+  if(unpracticed.length===0){
+    toast('🎉 All 120 combinations completed — starting a new cycle');
+    return [...ALL_COMBOS[randInt(ALL_COMBOS.length)]];
+  }
+  return [...unpracticed[randInt(unpracticed.length)]];
+}
+
+function getRotationSegments(){
+  const total = STATE.settings.presentSeconds;
+  const mode = STATE.settings.rotationMode;
+  if(mode==='off') return null;
+  if(mode==='fast'){
+    const seg = Math.round(total/3*0.7);
+    return [seg, seg, total-seg*2];
+  }
+  if(mode==='custom'){
+    let c = STATE.settings.customRotation.slice(0,3);
+    const sum = c.reduce((a,b)=>a+b,0);
+    if(sum>total || sum<=0){
+      const each = Math.floor(total/3);
+      return [each, each, total-each*2];
+    }
+    // pad remainder onto last segment
+    c[2] += (total-sum);
+    return c;
+  }
+  const each = Math.floor(total/3);
+  return [each, each, total-each*2];
+}
+
+function recordSimulation(combo, mode, completed){
+  const key = comboKey(combo);
+  if(!STATE.coverage[key]) STATE.coverage[key] = {count:0,lastDate:null};
+  STATE.coverage[key].count += 1;
+  STATE.coverage[key].lastDate = new Date().toISOString();
+  STATE.totalSimulations += 1;
+  STATE.streak += 1;
+  STATE.history.unshift({
+    id: 'sim_'+Date.now(),
+    date: new Date().toISOString(),
+    names: combo.map(i=>ATTRACTIONS[i].name),
+    mode: mode,
+    completed: completed,
+  });
+  if(STATE.history.length>300) STATE.history.length=300;
+  saveState();
+}
+
+function fmtTime(sec){
+  sec = Math.max(0, Math.ceil(sec));
+  const m = Math.floor(sec/60);
+  const s = sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+/* --- audio: tiny synthesized chime, no external assets ---
+   Mobile browsers block audio until a user gesture. unlockAudio() is called
+   from direct tap handlers (mode-select, "Begin Preparation") so the
+   AudioContext is already running by the time a timer-driven chime fires. */
+let audioCtx=null;
+function unlockAudio(){
+  if(!STATE.settings.sound) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+  }catch(e){ /* Web Audio unavailable — app continues silently */ }
+}
+function playChime(double){
+  if(!STATE.settings.sound) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const ring = (delay)=>{
+      const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+      o.type='sine'; o.frequency.value = 660;
+      o.connect(g); g.connect(audioCtx.destination);
+      const t = audioCtx.currentTime+delay;
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.18,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.5);
+      o.start(t); o.stop(t+0.55);
+    };
+    ring(0);
+    if(double) ring(0.22);
+  }catch(e){/* audio not available — never breaks the simulation */}
+}
+
+/* --- haptics: optional, never blocks the app if unsupported --- */
+function hapticPulse(pattern){
+  if(!STATE.settings.haptics) return;
+  try{
+    if(navigator.vibrate) navigator.vibrate(pattern);
+  }catch(e){ /* vibration unavailable */ }
+}
+
+/* --- Screen Wake Lock: keep the screen on during prep/presentation --- */
+const WakeLockMgr = {
+  sentinel:null,
+  async acquire(){
+    if(!STATE.settings.wakeLock) return;
+    try{
+      if('wakeLock' in navigator){
+        this.sentinel = await navigator.wakeLock.request('screen');
+        this.sentinel.addEventListener('release', ()=>{ this.sentinel=null; });
+      }
+    }catch(e){ /* Wake Lock unsupported or denied — app continues normally */ }
+  },
+  async release(){
+    try{ if(this.sentinel){ await this.sentinel.release(); this.sentinel=null; } }catch(e){}
+  }
+};
+// Re-acquire the wake lock if the tab regains visibility mid-simulation
+// (Android releases it automatically when the screen/tab is backgrounded).
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState==='visible' && (Sim.phase==='prep'||Sim.phase==='present')){
+    WakeLockMgr.acquire();
+  }
+});
+
+/* =========================================================
+   PWA: INSTALL PROMPT (Android "Add to Home screen")
+   ========================================================= */
+const PWAInstall = {
+  deferredPrompt:null,
+  dismissed: sessionStorage.getItem('installBannerDismissed')==='1',
+  init(){
+    window.addEventListener('beforeinstallprompt', (e)=>{
+      e.preventDefault();
+      this.deferredPrompt = e;
+      if(!this.dismissed) this.showBanner();
+    });
+    window.addEventListener('appinstalled', ()=>{
+      this.deferredPrompt = null;
+      this.hideBanner();
+      toast('App installed — find it on your home screen');
+    });
+  },
+  showBanner(){ document.getElementById('install-banner').classList.add('show'); },
+  hideBanner(){ document.getElementById('install-banner').classList.remove('show'); },
+  dismissBanner(){ this.dismissed=true; sessionStorage.setItem('installBannerDismissed','1'); this.hideBanner(); },
+  async promptInstall(){
+    if(!this.deferredPrompt){ Router.go('install'); return; }
+    this.deferredPrompt.prompt();
+    const choice = await this.deferredPrompt.userChoice;
+    this.deferredPrompt = null;
+    this.hideBanner();
+    if(choice.outcome!=='accepted') toast('Installation cancelled');
+  }
+};
+PWAInstall.init();
+
+/* =========================================================
+   PWA: SERVICE WORKER REGISTRATION + UPDATE HANDLING
+   ========================================================= */
+const PWAUpdate = {
+  waitingWorker:null,
+  showBanner(){ document.getElementById('update-banner').classList.add('show'); },
+  hideBanner(){ document.getElementById('update-banner').classList.remove('show'); },
+  dismissBanner(){ this.hideBanner(); },
+  applyUpdate(){
+    if(this.waitingWorker){
+      this.waitingWorker.postMessage('SKIP_WAITING');
+    }
+    this.hideBanner();
+  }
+};
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('service-worker.js').then(reg=>{
+      if(reg.waiting){ PWAUpdate.waitingWorker=reg.waiting; PWAUpdate.showBanner(); }
+      reg.addEventListener('updatefound', ()=>{
+        const nw = reg.installing;
+        if(!nw) return;
+        nw.addEventListener('statechange', ()=>{
+          if(nw.state==='installed' && navigator.serviceWorker.controller){
+            PWAUpdate.waitingWorker = nw;
+            PWAUpdate.showBanner();
+          }
+        });
+      });
+    }).catch(()=>{ /* offline-first app still works without SW registration */ });
+    let refreshed = false;
+    navigator.serviceWorker.addEventListener('controllerchange', ()=>{
+      if(refreshed) return;
+      refreshed = true;
+      window.location.reload();
+    });
+  });
+}
+
+/* =========================================================
+   EXPORT / IMPORT PROGRESS (JSON)
+   ========================================================= */
+function exportProgress(){
+  const payload = JSON.stringify(STATE, null, 2);
+  const blob = new Blob([payload], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `china-tour-guiding-progress-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  toast('Progress exported');
+}
+function importProgressFile(fileInput){
+  const file = fileInput.files && fileInput.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const incoming = JSON.parse(e.target.result);
+      if(!incoming || typeof incoming!=='object') throw new Error('bad file');
+      STATE = Object.assign(defaultState(), migrateState(incoming), {
+        settings: Object.assign(defaultState().settings, incoming.settings||{})
+      });
+      saveState();
+      toast('Progress imported');
+      render();
+    }catch(err){
+      toast('Could not read that file — is it a valid export?');
+    }
+  };
+  reader.readAsText(file);
+  fileInput.value='';
+}
+
+/* =========================================================
+   FULLSCREEN MODE
+   ========================================================= */
+const FullscreenMode = {
+  active:false,
+  enter(){
+    this.active = true;
+    document.getElementById('fs-overlay').classList.add('show');
+    renderFullscreen();
+  },
+  exit(){
+    this.active = false;
+    document.getElementById('fs-overlay').classList.remove('show');
+  }
+};
+function renderFullscreen(){
+  const el = document.getElementById('fs-content');
+  if(!Sim.combo){ el.innerHTML=''; return; }
+  const phase = Sim.phase;
+  const attrs = Sim.combo.map(i=>ATTRACTIONS[i]);
+  let timerVal = '';
+  let phaseLabel = '';
+  if(phase==='prep'){ timerVal = fmtTime(Sim.prepDuration - Sim.elapsedPrep()); phaseLabel='Preparation'; }
+  else if(phase==='present'){ timerVal = fmtTime(Sim.presentDuration - Sim.elapsedPresent()); phaseLabel='Presenting'; }
+  el.innerHTML = `
+    <div class="fs-phase">${phaseLabel}</div>
+    <div class="fs-timer">${timerVal}</div>
+    <div class="fs-attractions">
+      ${attrs.map((a,i)=>`
+        <div class="fs-attr ${Sim.rotationEnabled && phase==='present' && Sim.currentRotIndex===i ? 'active':(!Sim.rotationEnabled?'active':'')}">
+          <div style="width:64px;height:64px;margin:0 auto;border-radius:50%;background:linear-gradient(155deg,#C9A24B,#9C2B2E);display:flex;align-items:center;justify-content:center;color:#221E1A;">${attrIconSVG(a)}</div>
+          <div class="fs-name">${a.name}</div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+/* =========================================================
+   UI UPDATE HELPERS (called from rAF loop, avoid full re-render)
+   ========================================================= */
+function updatePrepUI(remain){
+  const disp = document.getElementById('timer-display');
+  const bar = document.getElementById('timer-bar-fill');
+  if(disp) disp.textContent = fmtTime(remain);
+  if(bar) bar.style.width = (100*(remain/Sim.prepDuration))+'%';
+  if(FullscreenMode.active) renderFullscreen();
+}
+function updatePresentUI(remain){
+  const disp = document.getElementById('timer-display');
+  const bar = document.getElementById('timer-bar-fill');
+  const note = document.getElementById('timer-note');
+  if(disp){
+    disp.textContent = fmtTime(remain);
+    disp.classList.remove('warn','danger');
+    if(remain<=30) disp.classList.add('danger');
+    else if(remain<=60) disp.classList.add('warn');
+  }
+  if(bar){
+    bar.style.width = (100*(remain/Sim.presentDuration))+'%';
+    bar.classList.toggle('warn', remain<=60);
+  }
+  if(note){
+    if(remain<=10 && remain>0) note.textContent = Math.ceil(remain)+'…';
+    else if(remain<=30) note.textContent = '⚠️ 30 seconds remaining';
+    else if(remain<=60) note.textContent = '⚠️ One minute remaining';
+    else if(remain<=0) note.textContent = '⛔ Time\'s up';
+    else note.textContent='';
+  }
+  // Haptic milestones — each threshold fires once per simulation
+  const whole = Math.ceil(remain);
+  if(whole !== Sim._lastPresentSec){
+    Sim._lastPresentSec = whole;
+    if(whole===60) hapticPulse(35);
+    else if(whole===30) hapticPulse(35);
+    else if(whole>0 && whole<=10) hapticPulse(15);
+    else if(whole===0) hapticPulse([80,50,80]);
+  }
+  if(FullscreenMode.active) renderFullscreen();
+}
+function updateRotationUI(elapsed){
+  const segs = Sim.rotationSegments;
+  if(!segs) return;
+  let acc=0, idx=0;
+  for(let i=0;i<segs.length;i++){ acc+=segs[i]; if(elapsed<acc){ idx=i; break; } idx=i; }
+  if(idx!==Sim.currentRotIndex){
+    Sim.currentRotIndex = idx;
+    document.querySelectorAll('.attr-card').forEach((el,i)=>{
+      el.classList.toggle('current', i===idx);
+      el.classList.toggle('dim', i!==idx);
+    });
+    if(FullscreenMode.active) renderFullscreen();
+  }
+  document.querySelectorAll('.rot-chip').forEach((el,i)=>el.classList.toggle('active', i===idx));
+}
+
+/* =========================================================
+   RENDER: MAIN DISPATCH
+   ========================================================= */
+function render(){
+  const root = document.getElementById('app-root');
+  root.innerHTML = SCREENS[Router.current] ? SCREENS[Router.current]() : SCREENS.home();
+  afterRender();
+}
+
+function afterRender(){
+  if(Router.current==='simulate'){
+    if(Sim.phase==='reveal') runRevealSequence();
+    if(Sim.phase==='prep') updatePrepUI(Sim.prepDuration - Sim.elapsedPrep());
+    if(Sim.phase==='present') updatePresentUI(Sim.presentDuration - Sim.elapsedPresent());
+  }
+  document.querySelectorAll('.bottom-nav button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.screen===Router.current);
+  });
+}
+
+/* =========================================================
+   SCREEN: HOME
+   ========================================================= */
+function coverageStats(){
+  const done = Object.keys(STATE.coverage).length;
+  return { done, total:120, pct: Math.round(100*done/120) };
+}
+const SCREENS = {};
+
+SCREENS.home = function(){
+  const cov = coverageStats();
+  return `
+  <div class="screen">
+    <div class="hero">
+      <div class="eyebrow">🇨🇳 CHINA · TOUR GUIDING COMPETITION</div>
+      <h1>Master the unknown.<br>Train every combination.</h1>
+      <p class="tag">Ten attractions. One hundred twenty possible tours. Zero surprises on competition day.</p>
+    </div>
+
+    <div class="menu-grid">
+      <button class="menu-card primary" onclick="Sim.start('Official Competition',{pauseAllowed:false})">
+        <div class="mc-icon">🏆</div>
+        <div class="mc-title">Official Competition</div>
+        <div class="mc-sub">2-min prep · 5-min presentation · static reference, exactly like the real thing</div>
+      </button>
+      <button class="menu-card" onclick="Sim.start('Pressure Visual Mode',{pauseAllowed:false, rotation:true})">
+        <div class="mc-icon">⚡</div>
+        <div class="mc-title">Pressure Visual Mode</div>
+        <div class="mc-sub">Attractions rotate automatically during your 5 minutes</div>
+      </button>
+      <button class="menu-card" onclick="Sim.start('Impromptu Mode',{pauseAllowed:true})">
+        <div class="mc-icon">🎤</div>
+        <div class="mc-title">Impromptu Mode</div>
+        <div class="mc-sub">Structural prompts only — no script, forces spontaneous speaking</div>
+      </button>
+      <button class="menu-card" onclick="Router.go('visualRecall')">
+        <div class="mc-icon">👁️</div>
+        <div class="mc-title">Visual Recall</div>
+        <div class="mc-sub">See the icon first. Recall the name before revealing it</div>
+      </button>
+      <button class="menu-card" onclick="Sim.start('Pure Random',{pauseAllowed:true})">
+        <div class="mc-icon">🎲</div>
+        <div class="mc-title">Pure Random</div>
+        <div class="mc-sub">Any 3 of the 10, fully randomized, repeats allowed</div>
+      </button>
+      <button class="menu-card" onclick="Router.go('progress')">
+        <div class="mc-icon">📊</div>
+        <div class="mc-title">Progress</div>
+        <div class="mc-sub">${cov.done} / 120 combinations practiced (${cov.pct}%)</div>
+      </button>
+      <button class="menu-card" onclick="Router.go('history')">
+        <div class="mc-icon">📚</div>
+        <div class="mc-title">History</div>
+        <div class="mc-sub">${STATE.history.length} logged simulations</div>
+      </button>
+      <button class="menu-card" onclick="Router.go('settings')">
+        <div class="mc-icon">⚙️</div>
+        <div class="mc-title">Settings</div>
+        <div class="mc-sub">Timers, rotation, difficulty, sound, resets</div>
+      </button>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-pill">Coverage <b>${cov.pct}%</b></div>
+      <div class="stat-pill">Streak <b>${STATE.streak}</b></div>
+      <div class="stat-pill">Total runs <b>${STATE.totalSimulations}</b></div>
+      <div class="stat-pill">Mode <b>${STATE.settings.randomization==='coverage'?'Coverage':'Pure Random'}</b></div>
+    </div>
+  </div>`;
+};
+
+/* =========================================================
+   SCREEN: SIMULATE (reveal / prep / present / complete)
+   ========================================================= */
+SCREENS.simulate = function(){
+  if(!Sim.combo) return SCREENS.home();
+  const attrs = Sim.combo.map(i=>ATTRACTIONS[i]);
+
+  if(Sim.phase==='reveal'){
+    return `
+    <div class="screen">
+      <div id="reveal-zone" style="text-align:center;padding:30px 0;">
+        <div class="phase-banner">${Sim.mode}</div>
+        <div id="reveal-content"><div class="reveal-countdown">3</div></div>
+      </div>
+    </div>`;
+  }
+
+  if(Sim.phase==='prep'){
+    return `
+    <div class="screen">
+      <div class="screen-header">
+        <button class="back-btn" onclick="if(confirm('Exit this simulation? Progress for this run will not be saved.')) Sim.exit();">✕ Exit</button>
+        <h2>${Sim.mode}</h2>
+      </div>
+      <div class="card">
+        <div class="phase-banner prep">Preparation — organize your tour</div>
+        <div class="timer-zone">
+          <div class="timer-label">Time to prepare</div>
+          <div class="timer-display" id="timer-display">${fmtTime(Sim.prepDuration - Sim.elapsedPrep())}</div>
+          <div class="timer-bar-track"><div class="timer-bar-fill" id="timer-bar-fill" style="width:100%"></div></div>
+          <div class="timer-note" id="timer-note"></div>
+        </div>
+        <div class="attraction-grid">
+          ${attrs.map((a,i)=>`
+            <div class="attr-card ${Sim.namesHidden?'hidden-name':''}">
+              <div class="idx">${i+1}</div>
+              <div class="icon-wrap">${attrIconSVG(a)}</div>
+              <div class="name">${a.name}</div>
+              <div class="loc">${a.loc}</div>
+            </div>`).join('')}
+        </div>
+        <div class="prompt-box">
+          <b>Mentally organize:</b>
+          <ul>
+            <li>Introduction — what is China known for?</li>
+            <li>Attraction 1 → smooth transition</li>
+            <li>Attraction 2 → smooth transition</li>
+            <li>Attraction 3 → closing</li>
+          </ul>
+        </div>
+        <div class="btn-row" style="justify-content:center;">
+          ${Sim.pauseAllowed ? `<button class="btn btn-ghost" onclick="Sim.togglePause()">${Sim.paused?'▶ Resume':'⏸ Pause'}</button>` : ''}
+          <button class="btn btn-primary" onclick="cancelAnimationFrame(Sim.rafId); Sim.beginPresent();">Skip to Presentation →</button>
+          <button class="btn btn-ghost" onclick="FullscreenMode.enter();">⛶ Full Screen</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(Sim.phase==='present'){
+    const rot = Sim.rotationEnabled ? Sim.rotationSegments : null;
+    return `
+    <div class="screen">
+      <div class="screen-header">
+        <button class="back-btn" onclick="if(confirm('Exit this simulation? Progress for this run will not be saved.')) Sim.exit();">✕ Exit</button>
+        <h2>${Sim.mode}</h2>
+      </div>
+      <div class="card">
+        <div class="phase-banner presenting">🎤 Presenting</div>
+        <div class="timer-zone">
+          <div class="timer-label">Presentation time remaining</div>
+          <div class="timer-display" id="timer-display">${fmtTime(Sim.presentDuration - Sim.elapsedPresent())}</div>
+          <div class="timer-bar-track"><div class="timer-bar-fill" id="timer-bar-fill" style="width:100%"></div></div>
+          <div class="timer-note" id="timer-note"></div>
+        </div>
+        ${rot ? `<div class="rotation-strip">
+          ${rot.map((s,i)=>`<div class="rot-chip ${i===0?'active':''}">${attrs[i].name.split(' ').slice(0,2).join(' ')} · ${fmtTime(s)}</div>`).join('')}
+        </div>` : ''}
+        <div class="attraction-grid">
+          ${attrs.map((a,i)=>`
+            <div class="attr-card ${rot && i!==0 ? 'dim':''} ${rot && i===0?'current':''}">
+              <div class="idx">${i+1}</div>
+              <div class="icon-wrap">${attrIconSVG(a)}</div>
+              <div class="name">${a.name}</div>
+              <div class="loc">${a.loc}</div>
+            </div>`).join('')}
+        </div>
+        ${Sim.mode==='Impromptu Mode' ? `
+        <div class="prompt-box">
+          <b>Structure prompts (no script):</b>
+          <ul>
+            <li>What is it? Where is it? Why does it matter?</li>
+            <li>What can a tourist experience there?</li>
+            <li>How do I bridge naturally to the next stop?</li>
+            <li>What should tourists remember when I close?</li>
+          </ul>
+        </div>` : ''}
+        <div class="btn-row" style="justify-content:center;">
+          ${Sim.pauseAllowed ? `<button class="btn btn-ghost" onclick="Sim.togglePause()">${Sim.paused?'▶ Resume':'⏸ Pause'}</button>` : ''}
+          <button class="btn btn-gold" onclick="Sim.finishNow();">✓ Finish Now</button>
+          <button class="btn btn-ghost" onclick="FullscreenMode.enter();">⛶ Full Screen</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(Sim.phase==='complete'){
+    return SCREENS.complete();
+  }
+  return SCREENS.home();
+};
+
+function runRevealSequence(){
+  const el = document.getElementById('reveal-content');
+  if(!el) return;
+  let n=3;
+  const step = ()=>{
+    if(n>0){
+      el.innerHTML = `<div class="reveal-countdown">${n}</div>`;
+      n--;
+      setTimeout(step, 550);
+    } else {
+      el.innerHTML = `<h2 style="margin-bottom:18px;">YOUR CHINA TOUR</h2>
+        <div class="attraction-grid" id="reveal-attrs"></div>
+        <div class="btn-row" style="justify-content:center;">
+          <button class="btn btn-primary" onclick="Sim.beginPrep();">Begin 2-Minute Preparation →</button>
+        </div>`;
+      const grid = document.getElementById('reveal-attrs');
+      Sim.combo.forEach((idx,i)=>{
+        const a = ATTRACTIONS[idx];
+        setTimeout(()=>{
+          const div = document.createElement('div');
+          div.className='attr-card reveal-attr-in';
+          div.innerHTML = `<div class="idx">${i+1}</div><div class="icon-wrap">${attrIconSVG(a)}</div><div class="name">${a.name}</div><div class="loc">${a.loc}</div>`;
+          grid.appendChild(div);
+        }, i*260);
+      });
+    }
+  };
+  step();
+}
+
+/* =========================================================
+   SCREEN: COMPLETE + SELF-EVAL + REFLECTION
+   ========================================================= */
+let evalRatings = {knowledge:0,communication:0,storytelling:0,professionalism:0,adaptability:0,timeMgmt:0};
+let reflectionData = {hardest:'', transition:'', finished:null, tooMuchTime:null, improve:''};
+
+SCREENS.complete = function(){
+  const attrs = Sim.combo.map(i=>ATTRACTIONS[i]);
+  const dims = [
+    ['knowledge','Destination Knowledge'],
+    ['communication','Communication'],
+    ['storytelling','Storytelling'],
+    ['professionalism','Professionalism'],
+    ['adaptability','Adaptability'],
+    ['timeMgmt','Time Management'],
+  ];
+  return `
+  <div class="screen">
+    <div class="screen-header"><h2>Presentation Complete</h2></div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:40px;">${Sim.finishedEarly?'✓':'⛔'}</div>
+      <h3 style="margin-top:8px;">${Sim.finishedEarly ? 'Finished within time' : 'Time\'s up'}</h3>
+      <div class="attraction-grid" style="margin-top:20px;">
+        ${attrs.map((a,i)=>`<div class="attr-card"><div class="idx">${i+1}</div><div class="icon-wrap">${attrIconSVG(a)}</div><div class="name">${a.name}</div><div class="loc">${a.loc}</div></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h3 style="margin-bottom:6px;">How did you perform?</h3>
+      <p style="font-size:12.5px;color:var(--charcoal-2);margin:0 0 16px;">Your own self-evaluation — not an official competition score.</p>
+      ${dims.map(([key,label])=>`
+        <div class="rate-row">
+          <div class="r-label">${label}</div>
+          <div class="stars" id="stars-${key}">
+            ${[1,2,3,4,5].map(n=>`<div class="star ${evalRatings[key]>=n?'on':''}" onclick="setRating('${key}',${n})">★</div>`).join('')}
+          </div>
+        </div>`).join('')}
+      <p style="font-size:11.5px;color:var(--charcoal-2);opacity:.65;margin-top:10px;">
+        Official criteria weighting: Destination Knowledge 30% · Communication 25% · Storytelling 20% · Professionalism 15% · Adaptability 10%.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h3 style="margin-bottom:14px;">Quick Reflection</h3>
+      <div class="field">
+        <label>Which attraction was hardest to talk about?</label>
+        <select id="refl-hardest" onchange="reflectionData.hardest=this.value">
+          <option value="">— choose —</option>
+          ${attrs.map(a=>`<option value="${a.name}">${a.name}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field">
+        <label>Which transition was hardest?</label>
+        <textarea id="refl-transition" rows="2" oninput="reflectionData.transition=this.value" placeholder="e.g. connecting attraction 2 to attraction 3..."></textarea>
+      </div>
+      <div class="field">
+        <label>Did you finish within 5 minutes?</label>
+        <div class="yn-row">
+          <button class="yn-btn sel-yes ${reflectionData.finished===true?'active':''}" onclick="reflectionData.finished=true;render();">Yes</button>
+          <button class="yn-btn sel-no ${reflectionData.finished===false?'active':''}" onclick="reflectionData.finished=false;render();">No</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Did you spend too much time on one attraction?</label>
+        <div class="yn-row">
+          <button class="yn-btn sel-yes ${reflectionData.tooMuchTime===true?'active':''}" onclick="reflectionData.tooMuchTime=true;render();">Yes</button>
+          <button class="yn-btn sel-no ${reflectionData.tooMuchTime===false?'active':''}" onclick="reflectionData.tooMuchTime=false;render();">No</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>What should you improve next time?</label>
+        <textarea id="refl-improve" rows="2" oninput="reflectionData.improve=this.value"></textarea>
+      </div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="finishReflectionAndRestart(false)">🎲 Next Random Combination</button>
+      <button class="btn btn-gold" onclick="finishReflectionAndRestart(true)">🔁 Practice This Combination Again</button>
+      <button class="btn btn-ghost" onclick="finishReflectionAndGoHome()">Return to Main Menu</button>
+    </div>
+  </div>`;
+};
+
+function setRating(key,n){ evalRatings[key]=n; render(); }
+
+function finishReflectionAndRestart(same){
+  const combo = Sim.combo.slice();
+  const mode = Sim.mode;
+  const opts = { pauseAllowed:Sim.pauseAllowed, rotation:Sim.rotationEnabled, namesHidden:Sim.namesHidden };
+  resetEvalState();
+  if(same){
+    Sim.combo = shuffleArr(combo);
+    Sim.mode = mode;
+    Sim.pauseAllowed = opts.pauseAllowed;
+    Sim.rotationEnabled = opts.rotation;
+    Sim.namesHidden = opts.namesHidden;
+    Sim.rotationSegments = getRotationSegments();
+    Sim.phase='reveal';
+    Router.go('simulate');
+  } else {
+    Sim.start(mode, opts);
+  }
+}
+function finishReflectionAndGoHome(){
+  resetEvalState();
+  Sim.exit();
+}
+function resetEvalState(){
+  evalRatings = {knowledge:0,communication:0,storytelling:0,professionalism:0,adaptability:0,timeMgmt:0};
+  reflectionData = {hardest:'', transition:'', finished:null, tooMuchTime:null, improve:''};
+}
+
+/* =========================================================
+   SCREEN: VISUAL RECALL MODE
+   ========================================================= */
+let recallState = { combo:null, revealed:[false,false,false] };
+SCREENS.visualRecall = function(){
+  if(!recallState.combo){
+    recallState.combo = shuffleArr(pickCombo());
+    recallState.revealed = [false,false,false];
+  }
+  const attrs = recallState.combo.map(i=>ATTRACTIONS[i]);
+  return `
+  <div class="screen">
+    <div class="screen-header">
+      <button class="back-btn" onclick="recallState.combo=null; Router.go('home')">✕ Exit</button>
+      <h2>👁️ Visual Recall</h2>
+    </div>
+    <div class="card">
+      <p style="color:var(--charcoal-2);font-size:13.5px;">Identify each attraction from its visual before revealing the name.</p>
+      <div class="attraction-grid">
+        ${attrs.map((a,i)=>`
+          <div class="attr-card ${recallState.revealed[i]?'':'hidden-name'}">
+            <div class="idx">${i+1}</div>
+            <div class="icon-wrap">${attrIconSVG(a)}</div>
+            <div class="name">${a.name}</div>
+            <div class="loc">${a.loc}</div>
+            ${!recallState.revealed[i]?`<div class="btn-row" style="justify-content:center;margin-top:12px;"><button class="btn btn-ghost" onclick="recallState.revealed[${i}]=true; render();">Reveal Attraction</button></div>`:''}
+          </div>`).join('')}
+      </div>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn btn-primary" onclick="recallState.combo=null; render();">🔄 New Set</button>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* =========================================================
+   SCREEN: PROGRESS DASHBOARD
+   ========================================================= */
+SCREENS.progress = function(){
+  const cov = coverageStats();
+  return `
+  <div class="screen">
+    <div class="screen-header">
+      <button class="back-btn" onclick="Router.go('home')">← Back</button>
+      <h2>📊 Combination Coverage</h2>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-tile"><div class="num">10</div><div class="lbl">Attraction Pool</div></div>
+      <div class="dash-tile"><div class="num">120</div><div class="lbl">Possible Combinations</div></div>
+      <div class="dash-tile"><div class="num">${cov.done}</div><div class="lbl">Practiced</div></div>
+      <div class="dash-tile"><div class="num">${STATE.totalSimulations}</div><div class="lbl">Total Simulations</div></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--charcoal-2);">
+        <span>Coverage</span><span>${cov.pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${cov.pct}%">${cov.pct>8?cov.pct+'%':''}</div></div>
+      ${cov.done>=120 ? `<p style="text-align:center;font-family:var(--serif);color:var(--red);font-size:18px;margin-top:16px;">🎉 ALL 120 COMBINATIONS COMPLETED</p>`:''}
+      <div class="combo-mini-grid">
+        ${ALL_COMBOS.map(c=>`<div class="combo-dot ${STATE.coverage[comboKey(c)]?'done':''}" title="${c.map(i=>ATTRACTIONS[i].name).join(' + ')}"></div>`).join('')}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="if(confirm('Reset combination coverage? This cannot be undone.')){STATE.coverage={};saveState();render();}">Reset Coverage</button>
+        <button class="btn btn-primary" onclick="Sim.start('Coverage Practice',{pauseAllowed:true})">Continue Training →</button>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* =========================================================
+   SCREEN: HISTORY
+   ========================================================= */
+SCREENS.history = function(){
+  return `
+  <div class="screen">
+    <div class="screen-header">
+      <button class="back-btn" onclick="Router.go('home')">← Back</button>
+      <h2>📚 Practice History</h2>
+    </div>
+    <div class="card">
+      ${STATE.history.length===0 ? `<div class="empty-note">No simulations logged yet. Start one from the main menu.</div>` :
+      STATE.history.map((h,i)=>`
+        <div class="history-item">
+          <div class="h-left">
+            <b>Simulation #${STATE.history.length-i}</b>
+            <div class="h-combo">${h.names.join(' · ')}</div>
+            <span class="tag-mode">${h.mode}</span>
+          </div>
+          <div class="h-right">
+            ${new Date(h.date).toLocaleString()}<br>
+            ${h.completed?'✅ Completed':'⏹ Ended'}
+          </div>
+        </div>`).join('')}
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="if(confirm('Clear history log?')){STATE.history=[];saveState();render();}">Clear History</button>
+        <button class="btn btn-danger" onclick="if(confirm('Reset ALL progress — coverage, history, streak? This cannot be undone.')){STATE=defaultState();saveState();render();}">Reset All Progress</button>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* =========================================================
+   SCREEN: SETTINGS
+   ========================================================= */
+SCREENS.settings = function(){
+  const s = STATE.settings;
+  return `
+  <div class="screen">
+    <div class="screen-header">
+      <button class="back-btn" onclick="Router.go('home')">← Back</button>
+      <h2>⚙️ Settings</h2>
+    </div>
+    <div class="settings-grid">
+      <div class="setting-block">
+        <h4>Timer</h4>
+        <div class="setting-row"><span>Preparation (mm:ss)</span>
+          <span><input type="number" min="0" max="10" value="${Math.floor(s.prepSeconds/60)}" onchange="updateMin('prepSeconds',this.value)" style="width:44px;"> :
+          <input type="number" min="0" max="59" value="${s.prepSeconds%60}" onchange="updateSec('prepSeconds',this.value)" style="width:44px;"></span>
+        </div>
+        <div class="setting-row"><span>Presentation (mm:ss)</span>
+          <span><input type="number" min="0" max="20" value="${Math.floor(s.presentSeconds/60)}" onchange="updateMin('presentSeconds',this.value)" style="width:44px;"> :
+          <input type="number" min="0" max="59" value="${s.presentSeconds%60}" onchange="updateSec('presentSeconds',this.value)" style="width:44px;"></span>
+        </div>
+      </div>
+
+      <div class="setting-block">
+        <h4>Visual Rotation</h4>
+        <div class="chip-row">
+          <button class="chip ${s.rotationMode==='equal'?'active':''}" onclick="setSetting('rotationMode','equal')">Equal</button>
+          <button class="chip ${s.rotationMode==='fast'?'active':''}" onclick="setSetting('rotationMode','fast')">Fast</button>
+          <button class="chip ${s.rotationMode==='custom'?'active':''}" onclick="setSetting('rotationMode','custom')">Custom</button>
+          <button class="chip ${s.rotationMode==='off'?'active':''}" onclick="setSetting('rotationMode','off')">Off</button>
+        </div>
+        ${s.rotationMode==='custom' ? `
+          <div class="setting-row" style="margin-top:10px;"><span>Attraction 1 (sec)</span><input type="number" min="10" max="280" value="${s.customRotation[0]}" onchange="updateCustomRot(0,this.value)"></div>
+          <div class="setting-row"><span>Attraction 2 (sec)</span><input type="number" min="10" max="280" value="${s.customRotation[1]}" onchange="updateCustomRot(1,this.value)"></div>
+          <div class="setting-row"><span>Attraction 3 (sec)</span><input type="number" min="10" max="280" value="${s.customRotation[2]}" onchange="updateCustomRot(2,this.value)"></div>
+          <p style="font-size:11.5px;color:var(--charcoal-2);">Total is capped at the presentation length.</p>
+        `:''}
+      </div>
+
+      <div class="setting-block">
+        <h4>Randomization</h4>
+        <div class="chip-row">
+          <button class="chip ${s.randomization==='pure'?'active':''}" onclick="setSetting('randomization','pure')">Pure Random</button>
+          <button class="chip ${s.randomization==='coverage'?'active':''}" onclick="setSetting('randomization','coverage')">Coverage Mode</button>
+        </div>
+      </div>
+
+      <div class="setting-block">
+        <h4>Difficulty</h4>
+        <div class="chip-row">
+          <button class="chip ${s.difficulty==='easy'?'active':''}" onclick="setSetting('difficulty','easy')">🟢 Easy</button>
+          <button class="chip ${s.difficulty==='normal'?'active':''}" onclick="setSetting('difficulty','normal')">🟡 Normal</button>
+          <button class="chip ${s.difficulty==='competition'?'active':''}" onclick="setSetting('difficulty','competition')">🔴 Competition</button>
+          <button class="chip ${s.difficulty==='pressure'?'active':''}" onclick="setSetting('difficulty','pressure')">⚫ Pressure</button>
+        </div>
+      </div>
+
+      <div class="setting-block">
+        <h4>Sound &amp; Animations</h4>
+        <div class="setting-row"><span>Sound cues</span><div class="toggle ${s.sound?'on':''}" onclick="toggleSetting('sound')"></div></div>
+        <div class="setting-row"><span>Animations</span><div class="toggle ${s.animations?'on':''}" onclick="toggleSetting('animations')"></div></div>
+      </div>
+
+      <div class="setting-block">
+        <h4>Mobile &amp; Android</h4>
+        <div class="setting-row"><span>Haptic feedback (vibration)</span><div class="toggle ${s.haptics?'on':''}" onclick="toggleSetting('haptics')"></div></div>
+        <div class="setting-row"><span>Keep screen awake during practice</span><div class="toggle ${s.wakeLock?'on':''}" onclick="toggleSetting('wakeLock')"></div></div>
+        <p style="font-size:11.5px;color:var(--charcoal-2);opacity:.75;margin-top:6px;">Both use standard browser APIs where supported (Vibration API, Screen Wake Lock API) and are silently skipped on browsers that don't support them.</p>
+      </div>
+
+      <div class="setting-block">
+        <h4>Keyboard Shortcuts</h4>
+        <div class="kbd-list">
+          <div><kbd>SPACE</kbd> Pause / Resume (training modes only)</div>
+          <div><kbd>N</kbd> Next attraction focus</div>
+          <div><kbd>R</kbd> Reveal (Visual Recall)</div>
+          <div><kbd>F</kbd> Finish simulation</div>
+          <div><kbd>ESC</kbd> Exit simulation</div>
+        </div>
+      </div>
+
+      <div class="setting-block">
+        <h4>Export / Import Progress</h4>
+        <p style="font-size:11.5px;color:var(--charcoal-2);margin-top:0;">Save your coverage, history, ratings, reflections and settings as a JSON file — useful before switching phones or clearing browser data.</p>
+        <div class="btn-row">
+          <button class="btn btn-gold" onclick="exportProgress()">⬇ Export My Progress</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('import-file-input').click()">⬆ Import Progress</button>
+          <input type="file" id="import-file-input" accept="application/json" style="display:none" onchange="importProgressFile(this)">
+        </div>
+      </div>
+
+      <div class="setting-block" style="grid-column:1/-1;">
+        <h4>Progress Data</h4>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="if(confirm('Reset combination coverage?')){STATE.coverage={};saveState();render();}">Reset Coverage</button>
+          <button class="btn btn-ghost" onclick="if(confirm('Reset history log?')){STATE.history=[];saveState();render();}">Reset History</button>
+          <button class="btn btn-danger" onclick="if(confirm('Reset ALL data? This cannot be undone.')){STATE=defaultState();saveState();render();}">Reset All Data</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* =========================================================
+   SCREEN: HOW TO INSTALL
+   ========================================================= */
+SCREENS.install = function(){
+  const canPrompt = !!PWAInstall.deferredPrompt;
+  return `
+  <div class="screen">
+    <div class="screen-header">
+      <button class="back-btn" onclick="Router.go('home')">← Back</button>
+      <h2>📲 How to Install</h2>
+    </div>
+    <div class="card">
+      <p style="color:var(--charcoal-2);font-size:13.5px;">Installing adds the trainer to your home screen and lets it run offline, without a browser address bar in the way.</p>
+      ${canPrompt ? `<div class="btn-row"><button class="btn btn-primary" onclick="PWAInstall.promptInstall()">📲 Install App</button></div>` : `
+      <div class="btn-row"><button class="btn btn-ghost" disabled>Install prompt not available right now</button></div>
+      <p style="font-size:12px;color:var(--charcoal-2);opacity:.75;">Your browser hasn't offered an install prompt yet — this is normal until it decides the app is installable, or on browsers that don't support it. Use the manual steps below instead.</p>`}
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="font-size:16px;margin-bottom:10px;">Android · Chrome</h3>
+      <ol style="font-size:13.5px;color:var(--charcoal-2);line-height:1.9;padding-left:20px;">
+        <li>Open this page in Chrome for Android.</li>
+        <li>Tap the <b>⋮</b> menu in the top-right corner.</li>
+        <li>Select <b>Add to Home screen</b> or <b>Install app</b> — the exact wording varies by Chrome version.</li>
+        <li>Confirm the install when prompted.</li>
+        <li>Open <b>China Tour Guiding</b> from your home screen like any other app.</li>
+      </ol>
+      <p style="font-size:11.5px;color:var(--charcoal-2);opacity:.7;">Other Android browsers (Samsung Internet, Firefox, Edge) support similar "Add to Home screen" options, but menu wording and PWA feature support differ by browser — not every browser supports every feature described here.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="font-size:16px;margin-bottom:10px;">Running it locally vs. hosting it</h3>
+      <p style="font-size:13.5px;color:var(--charcoal-2);line-height:1.7;">
+        Opening <code>index.html</code> straight from a downloaded folder works for practice, but installation, the service worker, and full offline caching need the app served from a real web address (a <code>https://</code> origin, or <code>http://localhost</code>) — that's a browser security requirement for these features, not something this app can work around from a bare local file.
+        The simplest route: drag the unzipped folder onto a free static host (for example Netlify Drop, GitHub Pages, or Vercel) — no command line or account setup beyond creating a free account is required — then open the resulting link on your phone and install from there.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="font-size:16px;margin-bottom:10px;">Updating</h3>
+      <p style="font-size:13.5px;color:var(--charcoal-2);line-height:1.7;">When a new version is deployed, a banner reading <b>🔄 Update available</b> appears at the top of the app. Tap <b>Update Now</b> whenever you like — your coverage, history and settings are stored separately in the browser and are never touched by an update.</p>
+    </div>
+  </div>`;
+};
+
+function updateMin(key,val){ const s=STATE.settings; const rem=s[key]%60; s[key]=Math.max(0,parseInt(val)||0)*60+rem; saveState(); render(); }
+function updateSec(key,val){ const s=STATE.settings; const mins=Math.floor(s[key]/60); s[key]=mins*60+Math.min(59,Math.max(0,parseInt(val)||0)); saveState(); render(); }
+function setSetting(key,val){ STATE.settings[key]=val; saveState(); render(); }
+function toggleSetting(key){ STATE.settings[key]=!STATE.settings[key]; saveState(); render(); }
+function updateCustomRot(i,val){ STATE.settings.customRotation[i]=Math.max(5,parseInt(val)||5); saveState(); render(); }
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+   ========================================================= */
+document.addEventListener('keydown', (e)=>{
+  if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if(Router.current!=='simulate') return;
+  if(e.code==='Space' && Sim.pauseAllowed && (Sim.phase==='prep'||Sim.phase==='present')){
+    e.preventDefault(); Sim.togglePause();
+  } else if(e.key==='f' || e.key==='F'){
+    if(Sim.phase==='present') Sim.finishNow();
+  } else if(e.key==='Escape'){
+    if(confirm('Exit this simulation?')) Sim.exit();
+  }
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "China Tour Guiding — Competition Training Simulator",
+  "short_name": "China Tour Guiding",
+  "description": "Offline training simulator for the China category of the Tour Guiding Competition — randomizes 3 of 10 official attractions, runs accurate 2-minute prep and 5-minute presentation timers, and tracks your progress across all 120 possible combinations.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "china-tour-guiding-trainer",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#F4EEDF",
+  "theme_color": "#9C2B2E",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "travel"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
